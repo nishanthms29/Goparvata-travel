@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GOPARVATA | Find Your Wild. Follow Your Wonder.</title>
+<meta name="description" content="Find Your Wild. Follow Your Wonder. Discover thoughtful India travel planning with GOPARVATA.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f3e8;--surface:#fffdf7;--ink:#1b2d26;--muted:#657365;--line:#e4ddcd;--brand:#173d2d;--on-brand:#fffdf7;--accent:#c99a3a;--on-accent:#1b2d26;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10271d;--surface:#173d2d;--ink:#f7f3e8;--muted:#c4cbbb;--line:#355b48;--brand:#c99a3a;--on-brand:#1b2d26;--accent:#c99a3a;--on-accent:#1b2d26}}
+:root[data-theme="dark"]{--bg:#10271d;--surface:#173d2d;--ink:#f7f3e8;--muted:#c4cbbb;--line:#355b48;--brand:#c99a3a;--on-brand:#1b2d26;--accent:#c99a3a;--on-accent:#1b2d26}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.6 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 1.25rem}
+header{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0}
+.logo{font:700 1.3rem Fraunces,serif;text-decoration:none}
+.tagline{display:block;color:var(--muted);font-size:.68rem;letter-spacing:.04em}
+nav a{margin-left:1.4rem;text-decoration:none;color:var(--muted);font-weight:500}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--brand);color:var(--on-brand);border:0;border-radius:6px;padding:.8rem 1.4rem;font:700 1rem "DM Sans",sans-serif;text-decoration:none;cursor:pointer}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:2.5rem;align-items:center;padding:3rem 0 4.5rem}
+.hero h1{font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:700;letter-spacing:-.02em}
+.hero p{color:var(--muted);max-width:34ch;margin:1.2rem 0 1.6rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.2rem}
+.chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:.45rem 1rem;font:500 .95rem "DM Sans",sans-serif;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.scene{border-radius:18px 18px 120px 18px;min-height:380px;padding:1.6rem;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;position:relative;overflow:hidden;transition:background .5s}
+.scene::before{content:"";position:absolute;right:12%;top:14%;width:84px;height:84px;border-radius:50%;background:var(--accent);opacity:.95}
+.scene h2{font-size:2rem;position:relative}
+.scene .meta{position:relative;margin:.4rem 0 0;opacity:.92}
+.price{position:relative;font-weight:700;margin-top:.8rem}
+section{padding:3.5rem 0}
+section>.wrap>h2{font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:.6rem}
+.lede{color:var(--muted);max-width:52ch;margin:0 0 2rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.dest{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.dest .art{height:120px}
+.dest div+div{padding:1rem 1.1rem 1.2rem}
+.dest h3{font-size:1.25rem;margin-bottom:.2rem}
+.dest p{margin:0;color:var(--muted);font-size:.95rem}
+.dest b{display:block;margin-top:.6rem;font-size:.95rem}
+.why{background:var(--brand);color:var(--on-brand)}
+.why .grid{gap:2rem}
+.why h3{font-size:1.35rem;margin-bottom:.4rem}
+.why p{margin:0;opacity:.9}
+form{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:700px}
+label{display:flex;flex-direction:column;gap:.35rem;font-weight:500;font-size:.95rem}
+label.full,form .btn{grid-column:1/-1}
+input,select,textarea{font:inherit;padding:.7rem .8rem;border:1.5px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+.ok{display:none;grid-column:1/-1;background:var(--surface);border-left:5px solid var(--accent);padding:1rem 1.2rem;border-radius:6px}
+footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.92rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+@media (max-width:820px){.hero,.grid{grid-template-columns:1fr}nav a:not(.btn){display:none}form{grid-template-columns:1fr}.scene{min-height:300px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.btn{transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px #173d2d24}
+.scene{box-shadow:0 18px 44px #173d2d20}
+.dest{transition:transform .2s,box-shadow .2s}
+.dest:hover{transform:translateY(-4px);box-shadow:0 12px 28px #173d2d18}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);outline-offset:2px}
+.ok.is-visible{display:block}
+.ok.error{border-left-color:#b42318;color:#b42318}
+@media (max-width:520px){.hero{padding:1.5rem 0 2.5rem}section{padding:2.5rem 0}header{gap:.75rem}.logo{font-size:1.1rem}nav a{margin-left:.4rem}.scene{min-height:260px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div><a class="logo" data-brand-name href="#top">GOPARVATA</a><small class="tagline" data-brand-tagline>Find Your Wild. Follow Your Wonder.</small></div>
+  <nav><a href="#destinations">Destinations</a><a href="#why">Why us</a><a class="btn" href="#plan">Plan my trip</a></nav>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div>
+    <h1 id="hero-title">Trips planned by people who’ve actually been there.</h1>
+    <p id="hero-intro">Tell us what kind of trip you want. We build the route, book everything and stay on call while you travel.</p>
+    <div class="chips" role="group" aria-label="Trip type">
+      <button class="chip" data-k="beach" aria-pressed="true">Beach</button>
+      <button class="chip" data-k="mountain" aria-pressed="false">Mountains</button>
+      <button class="chip" data-k="culture" aria-pressed="false">Culture</button>
+      <button class="chip" data-k="city" aria-pressed="false">City break</button>
+    </div>
+    <a class="btn" href="#plan">Get a custom itinerary</a>
+  </div>
+  <div class="scene" id="scene" aria-live="polite">
+    <h2 id="sName"></h2>
+    <p class="meta" id="sMeta"></p>
+    <div class="price" id="sPrice"></div>
+  </div>
+</div>
+</main>
+
+<section id="destinations">
+  <h2 id="destinations-title">Where our travellers are heading</h2>
+  <p class="lede" id="destinations-intro">Every package is a starting point. We adjust dates, hotels and pace to fit you.</p>
+  <div class="grid" id="dgrid"></div>
+</section>
+</div>
+
+<section class="why" id="why">
+  <div class="wrap">
+    <h2 id="why-title">What you get when you book with us</h2>
+    <p class="lede" id="why-intro" style="opacity:.85">A small team, one point of contact, and no surprise charges.</p>
+    <div class="grid">
+      <div><h3 id="benefit-one-title">One planner, start to finish</h3><p id="benefit-one-copy">You talk to the same person from first call to touchdown back home.</p></div>
+      <div><h3 id="benefit-two-title">Clear pricing</h3><p id="benefit-two-copy">Flights, stays, transfers and activities listed line by line before you pay.</p></div>
+      <div><h3 id="benefit-three-title">Help on the ground</h3><p id="benefit-three-copy">A real person answers our 24-hour travel line if plans change.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+<section id="plan">
+  <h2 id="plan-title">Plan your trip</h2>
+  <p class="lede" id="plan-intro">Share a few details and a planner will reply within one working day.</p>
+  <form id="f">
+    <label>Your name<input name="name" required autocomplete="name" maxlength="120"></label>
+    <label>Email<input name="email" type="email" required autocomplete="email" maxlength="190"></label>
+      <label>Destination<select id="dsel" name="destination" required></select></label>
+      <label>Travellers<input name="travellers" type="number" min="1" max="20" value="2" required></label>
+      <label class="full">Anything we should know?<textarea name="notes" rows="3" maxlength="2000" placeholder="Dates, budget, special occasions"></textarea></label>
+      <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px">
+    <button class="btn" type="submit">Send my request</button>
+      <div class="ok" id="ok" role="status" aria-live="polite" hidden></div>
+  </form>
+</section>
+</div>
+
+<footer><div class="wrap"><span>© <span id="current-year"></span> <span data-brand-name>GOPARVATA</span> · <span data-brand-tagline>Find Your Wild. Follow Your Wonder.</span></span><span><a id="contact-email" href="mailto:20shreyas@gmail.com">20shreyas@gmail.com</a> · <span id="contact-phone">+91 80 5550 0142</span> · <a href="backend/travel-admin.php">Admin</a></span></div></footer>
+<script src="brand.js" defer></script>
+
+<script>
+var travelApi="backend/api/travel.php";
+var destinations=[],scene=document.getElementById("scene"),indexByCategory={};
+var form=document.getElementById("f"),submitButton=form.querySelector('button[type="submit"]');
+submitButton.disabled=true;
+function gradient(item){return "linear-gradient(160deg,"+item.gradient_start+","+item.gradient_end+")"}
+function renderScene(category,advance){
+  var choices=destinations.filter(function(item){return item.category===category});
+  if(!choices.length)return;
+  var index=indexByCategory[category]||0;
+  if(advance)index=(index+1)%choices.length;
+  indexByCategory[category]=index;
+  var item=choices[index];
+  scene.style.background=gradient(item);
+  document.getElementById("sName").textContent=item.name;
+  document.getElementById("sMeta").textContent=item.description;
+  document.getElementById("sPrice").textContent="From "+item.price_label+" per person";
+}
+function renderDestinations(){
+  var grid=document.getElementById("dgrid"),select=document.getElementById("dsel");
+  grid.replaceChildren();select.replaceChildren();
+  var placeholder=document.createElement("option");
+  placeholder.value="";placeholder.disabled=true;placeholder.selected=true;
+  placeholder.textContent="Choose a destination";select.appendChild(placeholder);
+  destinations.forEach(function(item){
+    var card=document.createElement("article");card.className="dest";
+    var art=document.createElement("div");art.className="art";art.style.background=gradient(item);
+    var copy=document.createElement("div"),name=document.createElement("h3"),description=document.createElement("p"),price=document.createElement("b");
+    name.textContent=item.name;description.textContent=item.description;price.textContent="From "+item.price_label;
+    copy.append(name,description,price);card.append(art,copy);grid.appendChild(card);
+    var option=document.createElement("option");option.value=String(item.id);option.textContent=item.name;select.appendChild(option);
+  });
+  var unsure=document.createElement("option");unsure.value="unsure";unsure.textContent="Not sure yet";select.appendChild(unsure);
+  renderScene(document.querySelector('.chip[aria-pressed="true"]').dataset.k,false);
+}
+function applySettings(settings){
+  var fields={"hero_title":"hero-title","hero_intro":"hero-intro","destinations_title":"destinations-title","destinations_intro":"destinations-intro","why_title":"why-title","why_intro":"why-intro","benefit_one_title":"benefit-one-title","benefit_one_copy":"benefit-one-copy","benefit_two_title":"benefit-two-title","benefit_two_copy":"benefit-two-copy","benefit_three_title":"benefit-three-title","benefit_three_copy":"benefit-three-copy","plan_title":"plan-title","plan_intro":"plan-intro","contact_phone":"contact-phone"};
+  Object.keys(fields).forEach(function(key){if(settings[key])document.getElementById(fields[key]).textContent=settings[key]});
+  if(settings.contact_email){
+    var email=document.getElementById("contact-email");email.textContent=settings.contact_email;email.href="mailto:"+settings.contact_email;
+  }
+}
+document.querySelectorAll(".chip").forEach(function(button){button.addEventListener("click",function(){
+  document.querySelectorAll(".chip").forEach(function(chip){chip.setAttribute("aria-pressed",String(chip===button))});
+  renderScene(button.dataset.k,true);
+})});
+document.getElementById("current-year").textContent=new Date().getFullYear();
+fetch(travelApi+"?action=public",{headers:{Accept:"application/json"}})
+  .then(async function(response){var result=await response.json();if(!response.ok||!result.success)throw new Error(result.message||"Travel details could not be loaded.");return result})
+  .then(function(result){destinations=result.destinations;applySettings(result.settings);renderDestinations();submitButton.disabled=false})
+  .catch(function(error){console.error("Travel content load failed:",error);document.getElementById("ok").hidden=false;document.getElementById("ok").classList.add("is-visible","error");document.getElementById("ok").textContent="Trip planning is temporarily unavailable. Please try again later.";submitButton.disabled=true});
+form.addEventListener("submit",async function(event){
+  event.preventDefault();
+  var status=document.getElementById("ok");
+  submitButton.disabled=true;status.hidden=false;status.classList.remove("error");status.classList.add("is-visible");status.textContent="Sending your request…";
+  try{
+    var response=await fetch(travelApi+"?action=submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(Object.fromEntries(new FormData(form).entries()))});
+    var result=await response.json();
+    if(!response.ok||!result.success)throw new Error(result.message||"We couldn't send your request. Please try again.");
+    status.textContent=result.message;form.reset();
+  }catch(error){
+    status.classList.add("error");status.textContent=error instanceof Error?error.message:"We couldn't send your request. Please try again.";
+  }finally{submitButton.disabled=false}
+});
+</script>
+</body>
+</html>
