@@ -7,16 +7,55 @@ The legacy PHP/XAMPP source remains available for compatibility with the existin
 ## Requirements
 
 - Node.js 22.12 or newer and npm.
-- XAMPP Apache and MariaDB running locally.
-- A dedicated MariaDB application user. Do not run the website with the MariaDB root account.
+- A MySQL/MariaDB database reachable from the Next.js application and the migration runner. XAMPP MariaDB is suitable for local development; production needs a managed or otherwise publicly reachable/privately networked database host supported by your deployment setup.
+- A dedicated database application user. Do not run the website with the database root account.
 
-## Configure XAMPP MariaDB
+## Production environment
+
+Set these variables in the Vercel project's Production environment (and in Preview if previews should use a separate database). Keep credentials in Vercel's encrypted environment settings; never commit them or paste their values into source control or chat.
+
+| Variable | Required | Expected format |
+| --- | --- | --- |
+| `DATABASE_URL` | Yes | Prisma MySQL URL: `mysql://USER:URL_ENCODED_PASSWORD@HOST:3306/DATABASE`. Use the actual database host, port, name, and a least-privilege app user. Percent-encode reserved characters in the username/password. Add provider-specific TLS/connection parameters only as required by the database host. |
+| `AUTH_SECRET` | Yes | Unique, unpredictable secret with at least 32 random bytes. For example, generate one with `node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"` and set it only in the deployment environment. |
+| `APP_URL` | Yes | Canonical public site origin including `https://`, for example `https://www.example.com`, without a trailing slash. |
+
+The following settings are optional; configure them for the corresponding feature:
+
+| Variable(s) | Expected format / purpose |
+| --- | --- |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD` | SMTP server hostname, port number, `true`/`false` TLS mode, account username and private password/App Password. |
+| `EMAIL_FROM`, `ENQUIRY_TO_EMAIL` | Valid sender display address and destination email address for enquiry notices. |
+| `NEXT_PUBLIC_MAPS_API_KEY` | Optional browser-visible maps API key; restrict it to the production website origin and required APIs. |
+| `BUSINESS_EMAIL` | Public-facing valid email address. |
+| `BUSINESS_PHONE` | Public-facing phone number, preferably E.164 (for example, `+14155552671`). |
+| `WHATSAPP_BUSINESS_NUMBER` | International country code and number using digits only, with no `+`, spaces, or punctuation. |
+
+`ADMIN_SETUP_EMAIL`, `ADMIN_SETUP_NAME`, and `ADMIN_SETUP_PASSWORD` are one-time process environment inputs for `npm run admin:create`, not site runtime settings. Use a valid email, administrator display name, and unique password of at least 16 characters; provide them privately to the setup command.
+
+`.env.example` contains format placeholders only. Replace them in a private local `.env` or deployment settings; it is not a source of working credentials.
+
+## Deploy schema changes
+
+The Prisma datasource remains `provider = "mysql"` and the app uses MySQL/MariaDB in both local and production deployments. The checked-in migrations create the Next.js application's tables and apply the follow-up changes to those application tables; they do not reset the database or target the legacy PHP tables. Back up the production database and apply pending migrations to a staging copy first, especially before the first production rollout.
+
+Run migrations as a release step from a runner that can reach the production database, using the exact production `DATABASE_URL` supplied through a protected environment:
+
+```powershell
+npm run db:deploy
+```
+
+This runs Prisma's `prisma migrate deploy` command and applies only pending checked-in migrations. The regular build runs `prisma generate` and `next build`; it intentionally does not mutate the production schema. Do not use `prisma migrate dev`, `prisma migrate reset`, or `db:seed` against production. Keep the deployment database reachable by both the running Vercel application and the migration runner, allow the required network access, and grant the migration identity the DDL privileges needed by the reviewed migrations. Use a separate, short-lived migration identity with DDL privileges where the database host supports it; the Vercel runtime `DATABASE_URL` should use an application identity with only the privileges needed at runtime.
+
+The sitemap and database-backed public routes render at request time rather than querying the production database during `next build`. A production database error is surfaced; development-only sample fallbacks are not used to mask production database failures. Published catalogue content continues to come from the database.
+
+## Configure local XAMPP MariaDB
 
 1. Start MariaDB in the XAMPP Control Panel. Back up the `travel_agency` database before applying schema changes.
 2. Ensure the existing application user can access `travel_agency`. In the XAMPP MySQL shell, use the actual user/host shown by `SHOW GRANTS`; do not change or reset its password:
 
    ```sql
-   GRANT ALL PRIVILEGES ON `travel_agency`.* TO 'tern_compass_app'@'127.0.0.1';
+   GRANT ALL PRIVILEGES ON `travel_agency`.* TO '<existing-app-user>'@'<existing-host>';
    FLUSH PRIVILEGES;
    ```
 
@@ -29,7 +68,7 @@ The legacy PHP/XAMPP source remains available for compatibility with the existin
    node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"
    ```
 
-5. Install dependencies, apply only the checked-in additive Prisma migrations, and seed the Next.js application's own sample destinations and packages:
+5. Install dependencies, apply only the checked-in Prisma migrations, and seed the Next.js application's sample destinations and packages:
 
    ```powershell
    npm install

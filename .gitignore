@@ -11,3 +11,4 @@ test-results/
 vendor/
 composer.lock
 *.log
+*.tsbuildinfo

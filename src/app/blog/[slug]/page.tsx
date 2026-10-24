@@ -8,6 +8,8 @@ const examples: Record<string, { title: string; excerpt: string; image: string; 
   "questions-to-ask-before-booking-a-holiday": { title: "Questions to ask before you book", excerpt: "A practical list for checking inclusions, suppliers, cancellation terms and what a quotation actually covers.", image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=85", sections: [{ title: "What exactly is included?", body: "Ask for itemized transport, accommodation, meals, entrance tickets, taxes, guide services and anything that is not included." }, { title: "Who provides each service?", body: "Get supplier names, contact details, confirmation references and clear terms for each service in your itinerary." }, { title: "What changes the final price?", body: "Dates, group size, exchange rates, taxes and supplier availability can all affect a quote. Ask when and how the price is held." }] },
 };
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   return examples[slug] ? { title: examples[slug].title, description: examples[slug].excerpt } : { title: "Travel guide not found" };
@@ -21,6 +23,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
       const row = await db.blogPost.findFirst({ where: { slug, status: "PUBLISHED", publishedAt: { lte: new Date() } }, select: { title: true, excerpt: true, body: true, coverImage: true } });
       if (row) article = { title: row.title, excerpt: row.excerpt, image: row.coverImage || examples["questions-to-ask-before-booking-a-holiday"].image, sections: [{ title: "Travel guide", body: row.body }] };
     } catch (error) {
+      if (process.env.NODE_ENV === "production") throw error;
       console.error("Travel guide lookup unavailable.", error instanceof Error ? error.message : error);
     }
   }

@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { brand } from "@/lib/brand";
 
 export const metadata: Metadata = { title: "Travel notes", description: `Adventurous travel guides from ${brand.name}.` };
+export const dynamic = "force-dynamic";
 
 const editorialExamples = [
   { slug: "how-to-plan-a-slower-himalayan-trip", title: "Planning a slower Himalayan route", excerpt: "A planning checklist for acclimatization days, changing road conditions and realistic driving times.", coverImage: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=85" },
@@ -19,6 +20,7 @@ export default async function BlogPage() {
     posts = result.map((post) => ({ ...post, coverImage: post.coverImage || editorialExamples[0].coverImage }));
     sample = false;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") throw error;
     console.error("Travel guide database unavailable; showing editorial examples.", error instanceof Error ? error.message : error);
     posts = editorialExamples;
   }

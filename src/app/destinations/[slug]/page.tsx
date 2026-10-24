@@ -7,6 +7,8 @@ import { getPackages } from "@/lib/catalog";
 import { PackageGrid } from "@/components/package-grid";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 const guideContent: Record<string, { title: string; country: string; description: string; bestTime: string; duration: string; attractions: string[]; image: string }> = {
   kerala: { title: "Kerala", country: "India · Kerala", description: "Backwaters, tea-country hills and port-city neighborhoods reward a route with breathing room. These notes are a starting point; confirm seasonal conditions and transport with a local planner.", bestTime: "Usually October–March; verify seasonal weather before travel", duration: "5–8 days", attractions: ["Alleppey backwaters", "Munnar tea gardens", "Fort Kochi"], image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1600&q=85" },
   ladakh: { title: "Ladakh", country: "India · Ladakh", description: "A high-altitude landscape where a gradual pace matters. Acclimatization, road access, permits and weather can change; verify current guidance before arranging travel.", bestTime: "Typically June–September; confirm current road and weather conditions", duration: "7–10 days", attractions: ["Leh town", "Nubra Valley", "Pangong Lake"], image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=85" },
@@ -27,6 +29,7 @@ export default async function DestinationDetailPage({ params }: { params: Promis
   try {
     destination = await db.destination.findFirst({ where: { slug, published: true }, select: { name: true, country: true, state: true, description: true, bestTimeToVisit: true, suggestedDuration: true, attractions: true, imageUrl: true } });
   } catch (error) {
+    if (process.env.NODE_ENV === "production") throw error;
     console.error("Destination lookup unavailable; using the public editorial sample guide.", error instanceof Error ? error.message : error);
   }
   if (destination) {
@@ -45,7 +48,7 @@ export default async function DestinationDetailPage({ params }: { params: Promis
         <div className="shell destination-detail-copy"><p className="eyebrow eyebrow-light"><span /> {guide.country}</p><h1>{guide.title},<br /><em>at your pace.</em></h1><p>{guide.description}</p><Link className="button button-lime" href={`/plan-your-trip?destination=${encodeURIComponent(guide.title)}`}>Plan this trip <ArrowUpRight size={16} /></Link></div>
       </section>
       <section className="shell destination-facts"><div><CalendarDays size={19} /><span><small>Often best considered</small><strong>{guide.bestTime}</strong></span></div><div><MapPin size={19} /><span><small>Suggested time</small><strong>{guide.duration}</strong></span></div><div><span className="fact-mark">01</span><span><small>Places to explore</small><strong>{guide.attractions.length} starting points</strong></span></div></section>
-      <section className="section shell"><div className="section-heading"><div><p className="eyebrow"><span /> SAMPLE ROUTES</p><h2>Trips that pass<br />through <em>{guide.title}.</em></h2></div><p className="section-intro">These are planning concepts, not available departures. Ask for current pricing and supplier confirmation before making arrangements.</p></div>{packages.demo && <p className="demo-banner">Development sample routes only. Connect PostgreSQL for package management and enquiry storage.</p>}<PackageGrid items={packages.items} /></section>
+      <section className="section shell"><div className="section-heading"><div><p className="eyebrow"><span /> SAMPLE ROUTES</p><h2>Trips that pass<br />through <em>{guide.title}.</em></h2></div><p className="section-intro">These are planning concepts, not available departures. Ask for current pricing and supplier confirmation before making arrangements.</p></div>{packages.demo && <p className="demo-banner">Development sample routes only. Configure MySQL/MariaDB for package management and enquiry storage.</p>}<PackageGrid items={packages.items} /></section>
     </>
   );
 }

@@ -84,6 +84,7 @@ export async function getPackages(options: {
       demo: false,
     };
   } catch (error) {
+    if (process.env.NODE_ENV === "production") throw error;
     console.error("Package catalog unavailable; showing clearly marked development samples.", error instanceof Error ? error.message : error);
     let rows = demoPackages;
     if (options.category) rows = rows.filter((item) => item.category === options.category);
@@ -124,6 +125,7 @@ export async function getPackage(slug: string): Promise<{ item: CatalogPackage &
       demo: false,
     };
   } catch (error) {
+    if (process.env.NODE_ENV === "production") throw error;
     console.error("Package detail unavailable; showing clearly marked development samples.", error instanceof Error ? error.message : error);
     const item = demoPackages.find((candidate) => candidate.slug === slug);
     if (!item) return null;

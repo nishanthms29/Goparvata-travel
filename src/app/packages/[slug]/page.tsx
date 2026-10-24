@@ -7,6 +7,8 @@ import { EnquiryForm } from "@/components/enquiry-form";
 import { getPackage } from "@/lib/catalog";
 import { formatInr } from "@/lib/pricing";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const result = await getPackage(slug);

@@ -4,6 +4,8 @@ import { PackageGrid } from "@/components/package-grid";
 import { getPackages } from "@/lib/catalog";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Sample tour packages",
   description: "Explore sample domestic, international and adventure itineraries. Ask for a written quote before booking.",
@@ -54,7 +56,7 @@ export default async function PackagesPage({
             <button className="button button-dark" type="submit">Filter</button>
           </form>
         </div>
-        {result.demo && <p className="demo-banner">Showing clearly marked development samples because PostgreSQL is not connected yet. Booking requests are disabled until the database is configured.</p>}
+        {result.demo && <p className="demo-banner">Showing development samples because MySQL/MariaDB is unavailable. Booking requests are disabled until the database is configured.</p>}
         <PackageGrid items={result.items} />
         {totalPages > 1 && <nav className="pagination" aria-label="Package results pages">
           {page > 1 && <Link href={{ pathname: "/packages", query: { ...params, page: String(page - 1) } }}>← Previous</Link>}

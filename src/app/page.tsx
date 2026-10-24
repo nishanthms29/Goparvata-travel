@@ -5,6 +5,8 @@ import { SearchForm } from "@/components/search-form";
 import { PackageGrid } from "@/components/package-grid";
 import { getPackages } from "@/lib/catalog";
 
+export const dynamic = "force-dynamic";
+
 const heroImage = "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2200&q=88";
 
 export default async function HomePage() {
@@ -56,7 +58,7 @@ export default async function HomePage() {
             <div><p className="eyebrow"><span /> Routes worth imagining</p><h2>Good trips start<br />with <em>good questions.</em></h2></div>
             <p className="section-intro">These sample itineraries help you picture what’s possible. Dates, supplier availability and final prices are confirmed in a written quote.</p>
           </div>
-          {demo && <p className="demo-notice"><Sparkles size={16} /> Development sample itineraries — connect PostgreSQL and publish supplier-verified offers before taking bookings.</p>}
+          {demo && <p className="demo-notice"><Sparkles size={16} /> Development sample itineraries — configure MySQL/MariaDB and publish supplier-verified offers before taking bookings.</p>}
           <PackageGrid items={items} />
           <div className="center-action"><Link className="button button-outline" href="/packages">See all sample routes <ArrowUpRight size={16} /></Link></div>
         </div>

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { ContentStatus } from "@prisma/client";
 import { db } from "@/lib/db";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 const staticRoutes = [
   ["", 1],
